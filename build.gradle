@@ -1,0 +1,40 @@
+allprojects {
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
+}
+
+
+project(':common') {
+    dependencies {
+        compile 'com.opencsv:opencsv:4.3.2'
+    }
+}
+
+project(':role1') {
+    apply plugin: 'application'
+
+    dependencies {
+        compile project(':common')
+    }
+
+    mainClassName = "edu.uconn.cse2102.project.role1.Main"
+}
+
+project(':role2') {
+    apply plugin: 'application'
+
+    dependencies {
+        compile project(':common')
+    }
+
+    mainClassName = "edu.uconn.cse2102.project.role2.Main"
+}
