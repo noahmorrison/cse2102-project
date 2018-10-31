@@ -34,6 +34,7 @@ project(':role2') {
 
     dependencies {
         compile project(':common')
+        compile 'com.graphhopper:graphhopper-reader-osm:0.12.0-pre1'
     }
 
     mainClassName = "edu.uconn.cse2102.project.role2.Main"
