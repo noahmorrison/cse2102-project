@@ -81,6 +81,7 @@ public class Main extends JFrame implements ActionListener
         JPanel nav_container = new JPanel(new GridBagLayout());
         JPanel container_l = new  JPanel (new GridBagLayout());
         JPanel survey_panel = new JPanel(new GridBagLayout());
+        JPanel comment_panel = new JPanel();
         
         
         
@@ -92,6 +93,8 @@ public class Main extends JFrame implements ActionListener
         JButton Submit_l = new JButton("Confirm");
         JButton Submit_make_comment = new JButton("Confirm");
         JButton Submit_survey = new JButton("Submit");
+        
+        JButton Submit_legislator = new JButton("Are you a legislator");
     
         
         //Buttons for the Legislator 
@@ -99,6 +102,7 @@ public class Main extends JFrame implements ActionListener
         JButton Logout = new JButton("Logout");
         
         JTextArea data = new JTextArea(512,512);
+        JTextArea comment_data = new JTextArea(512,512);
         
         
         //Menu Properties
@@ -167,6 +171,13 @@ public void user_start(){
         constraints.gridy = 3;
         constraints.anchor = GridBagConstraints.CENTER;
         panel.add(Submit, constraints);
+        
+        //adding in the button
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        constraints.anchor = GridBagConstraints.CENTER;
+        panel.add(Submit_legislator, constraints);
+        Submit_legislator.addActionListener(this);
         
         add(panel);
         pack();
@@ -266,6 +277,8 @@ public void actionPerformed(ActionEvent e){
           if(e.getSource() == Submit_l){
           char[] legislator_password = keycode.getPassword();
           char[] c_pass = {'1','2','3','4'};
+          
+          
           if(Arrays.equals(legislator_password,c_pass))
           {
               RunSurveydata_();
@@ -343,23 +356,52 @@ public void actionPerformed(ActionEvent e){
           start_comment_section();
           
           }
+          if(e.getSource() == Submit_legislator){
+              legislator_start();
+              frame.setVisible(false);
+              
+          
+          }
       }
 //List of comments 
-public void listofComments(){
+public JPanel listofComments(){
     List<Comments> csvComments = Comments.load();
     
     
     for(Comments comm: csvComments){
+        
+       
+        JLabel id = new JLabel("Id: " +  "\n" + comm.getId());
+        comment_data.append("Id: " +  "\n" + comm.getId()); 
         System.out.print("Id: " + "\n" +  comm.getId());
+        comment_panel.add(id);
+        
+        JLabel name = new JLabel("Name: " +  "\n" + comm.getFull_Name());
+        comment_data.append("Name: \n" + comm.getFull_Name());
         System.out.print("Full_Name: " + "\n" +  comm. getFull_Name());
+        comment_panel.add(name);
+        
+        JLabel ss = new JLabel("SS:" + "\n" + comm.getSS());
+        comment_data.append("SS: \n" + comm.getSS());
         System.out.print("SS:" + "\n" + comm.getSS());
+        comment_panel.add(ss);
+        
+        JLabel comment = new JLabel("Comment:" + "\n" + comm.getComment());
+        comment_data.append("Comment: \n" + comm.getComment());
         System.out.print("Comment:" + "\n" + comm.getComment());
+        comment_panel.add(comment);
+        
+        JLabel time = new JLabel("Time:" + "\n" + comm.getTime());
+        comment_data.append("Time: \n" + comm.getTime());
         System.out.print("Time:" + "\n" + comm.getTime());
+        comment_panel.add(time);
         
         
         
     }
-
+return comment_panel;
+    
+    
 
 }
 public JPanel ListOfData(){
@@ -407,10 +449,14 @@ public JPanel ListOfData(){
         
     return Hospital_data;
 }
-private void start_comment_section() {
+public void start_comment_section() {
         
+       
+        JPanel pane = listofComments();
+        frame3.add(pane); 
         frame3.setSize(1024, 1024);
         frame3.setVisible(true);
+       
         frame3.setDefaultCloseOperation(EXIT_ON_CLOSE);
     
     }
@@ -534,14 +580,13 @@ public void TestCase(
 }
 
 
-//Customization
+
 
     public static void main(String[] args)
     {
         
      Main test = new Main();
-    
-     test.make_comment_section();   
+     test.user_start();
     }
 
 
