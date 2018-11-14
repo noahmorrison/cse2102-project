@@ -51,6 +51,15 @@ public class Hospital
     @CsvBindByName(column = "Meets criteria for meaningful use of EHRs", required = false)
     private String ehr;
 
+    @CsvBindByName(column = "Mortality national comparison", required=true)
+    private String Mortality;
+
+    @CsvBindByName(column = "Patient experience national comparison", required=true)
+    private String Experience;
+
+    @CsvBindByName(column = "Timeliness of care national comparison", required=true)
+    private String Timeliness;
+
     // Getters
     public String getId()
     {
@@ -97,6 +106,21 @@ public class Hospital
         return this.address + ", " + this.city + ", " + this.state + " " + this.zipcode;
     }
 
+    public String getExperience()
+    {
+        return Experience;
+    }
+
+    public String getMortality()
+    {
+        return Mortality;
+    }
+
+    public String getTimeliness()
+    {
+        return Timeliness;
+    }
+
     // Setters
     public void setId(String id)
     {
@@ -136,5 +160,20 @@ public class Hospital
     public void setEhr(String ehr)
     {
         this.ehr = ehr;
+    }
+
+    public void setExperience(String Experience)
+    {
+        this.Experience = Experience;
+    }
+
+    public void setMortality(String Mortality)
+    {
+        this.Mortality = Mortality;
+    }
+
+    public void setTimeliness(String Timeliness)
+    {
+        this.Timeliness = Timeliness;
     }
 }
